@@ -41,7 +41,15 @@
 		}
 
 		function pageCalculate() {
-			var WinHeight = $('html').outerHeight();
+			var PageHeight = $('html').outerHeight();
+
+			//add resize function
+
+			return PageHeight;
+		};
+
+		function WinCalculate() {
+			var WinHeight = $(window).outerHeight();
 
 			//add resize function
 
@@ -140,10 +148,11 @@
 			} else {
 
 				var pagePosition = $(window).scrollTop();
-
+				var scrollAbleArea = pageCalculate() - WinCalculate();
+				
 				// First Load
 
-				if(pagePosition > pageCalculate()) {
+				if(pagePosition >= ( scrollAbleArea ) ) {
 					$('.scrollHelper').html('Scroll Up').addClass('showup');
 				} else{
 					$('.scrollHelper').html('Scroll Down').removeClass('showup');
@@ -154,9 +163,9 @@
 				$(window).scroll(function(){
 					pagePosition = $(window).scrollTop();
 
-					console.log(pagePosition + ' - ' +pageCalculate());
+					//console.log(scrollAbleArea);
 
-					if(pagePosition >= pageCalculate()) {
+					if(pagePosition >= ( pageCalculate() - WinCalculate() ) ) {
 						$('.scrollHelper').html('Scroll Up').addClass('showup');
 					} else{
 						$('.scrollHelper').html('Scroll Down').removeClass('showup');

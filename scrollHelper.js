@@ -14,7 +14,8 @@
 			waitTime  : 3000,
 			invisibleonScroll  : false,
 			jumpTo  : false,
-			showUp : false
+			showUp : false,
+			trigger : 'once'
 		}, options);
 
 			
@@ -40,10 +41,24 @@
 			var showUpResult = false;
 		}
 
+		if ( settings.trigger ) {
+			var triggerResult = settings.trigger;			
+		}
+
+
+		function triggerResultF() {
+			if(triggerResult !== 'always') {
+				var triggerOnce = true;
+			}
+		};
+
 		function pageCalculate() {
 			var PageHeight = $('html').outerHeight();
 
-			//add resize function
+			//Resize
+			$(window).resize(function(){
+				PageHeight = $('html').outerHeight();
+			});
 
 			return PageHeight;
 		};
@@ -51,7 +66,10 @@
 		function WinCalculate() {
 			var WinHeight = $(window).outerHeight();
 
-			//add resize function
+			//Resize
+			$(window).resize(function(){
+				WinHeight = $(window).outerHeight();
+			});
 
 			return WinHeight;
 		};
@@ -87,29 +105,26 @@
 
 			if(jumpToResult !== false) {
 				$.each($(jumpToResult), function(i,e){
-					$(e).addClass('scrollHelperSection'+i);
-
+					$(e).addClass('scrollTo scrollHelperSection'+i);
 					// addClass
-
-
 
 				});
 
 
-
-
+				// First Load
+				var num = 0;
 				$('.scrollHelper').on('click', function(){
 
 					if($(this).hasClass('showup')) {
-
+						num = 0;
 						$('html, body').animate({
-							scrollTop: $('.scrollHelperSection4').offset().top
+							scrollTop: 0
 						});
 
 					} else {
-
+						num = num + 1;
 						$('html, body').animate({
-							scrollTop: $('.scrollHelperSection4').offset().top
+							scrollTop: $('.scrollTo').eq(num).offset().top
 						});
 					}
 

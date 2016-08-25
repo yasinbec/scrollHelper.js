@@ -45,10 +45,10 @@
 			var triggerResult = settings.trigger;			
 		}
 
-
 		function triggerResultF() {
 			if(triggerResult !== 'always') {
 				var triggerOnce = true;
+				return triggerOnce;
 			}
 		};
 
@@ -107,31 +107,28 @@
 				$.each($(jumpToResult), function(i,e){
 					$(e).addClass('scrollTo scrollHelperSection'+i);
 					// addClass
-
 				});
-
 
 				// First Load
 				var num = 0;
 				$('.scrollHelper').on('click', function(){
-
 					if($(this).hasClass('showup')) {
 						num = 0;
+
+						$('.scrollTo').removeClass('scrolled');
 						$('html, body').animate({
 							scrollTop: 0
 						});
 
 					} else {
 						num = num + 1;
+						$('.scrollTo').eq(num).addClass('scrolled');
 						$('html, body').animate({
 							scrollTop: $('.scrollTo').eq(num).offset().top
 						});
 					}
-
 				});
-
 			}
-
 		};
 
 		function showUpF() {
@@ -192,6 +189,7 @@
 		};
 		
 		// Init
+		triggerResultF();
 		createElem();
 		waitTimeF();
 		invisibleonScrollF();
